@@ -24,9 +24,10 @@ const App = () => {
   useEffect(() => establishConnection(connectionNetwork), [connectionNetwork, establishConnection]);
 
   const shouldAnimateForward = useMemo(() => !error && balance && !isEditingMode, [isEditingMode, balance, error])
-  const shouldAnimateBackward = useMemo(() => error || isEditingMode && balance, [isEditingMode, error])
+  const shouldAnimateBackward = useMemo(() => !error && isEditingMode && balance, [isEditingMode, error])
 
-  const fetchWalletBalance = useCallback(() => {
+  const fetchWalletBalance = useCallback((e: any) => {
+    e.preventDefault();
     setIsEditingMode(false);
     getBalance(inputRef.current?.value as string);
   }, [getBalance]);
@@ -37,7 +38,7 @@ const App = () => {
 
   return (
     <FormContainer>
-      <CForm>
+      <CForm onSubmit={fetchWalletBalance}>
         <CContainer>
           <CRow className="justify-content-center">
             <CCol xs={4}>
@@ -61,7 +62,12 @@ const App = () => {
                 ref={inputRef}
                 type="text"
                 label="Wallet address"
-                onKeyUp={() => setIsEditingMode(true)}
+                onKeyUp={(e) => {
+                  if (e.key !== 'Enter') {
+                    setIsEditingMode(true);
+                  }
+                }
+                }
               />
               <span style={{color: 'red '}}>{error}</span>
               {balance && (
@@ -69,7 +75,7 @@ const App = () => {
               )}
             </CCol>
             <CCol>
-              <CButton onClick={fetchWalletBalance}>Check balance</CButton>
+              <CButton type="button" onClick={fetchWalletBalance}>Check balance</CButton>
             </CCol>
           </CRow>
           <CRow>
