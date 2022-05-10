@@ -24,7 +24,7 @@ const App = () => {
   useEffect(() => establishConnection(connectionNetwork), [connectionNetwork, establishConnection]);
 
   const shouldAnimateForward = useMemo(() => !error && balance && !isEditingMode, [isEditingMode, balance, error])
-  const shouldAnimateBackward = useMemo(() => !error && isEditingMode && balance, [isEditingMode, error])
+  const shouldAnimateBackward = useMemo(() => !error && balance && isEditingMode, [isEditingMode, balance, error])
 
   const fetchWalletBalance = useCallback((e: any) => {
     e.preventDefault();
@@ -49,7 +49,7 @@ const App = () => {
               </ImageContainerPlaceholder>
             </CCol>
           </CRow>
-          <CRow xs={{ gutterY: 4, cols: 2 }}>
+          <CRow className="app-form" xs={{ gutterY: 4, cols: 2 }}>
             <CCol xs={3}>
               <CFormSelect ref={selectRef}
                            label="Select network"
@@ -77,9 +77,6 @@ const App = () => {
             <CCol>
               <CButton type="button" onClick={fetchWalletBalance}>Check balance</CButton>
             </CCol>
-          </CRow>
-          <CRow>
-
           </CRow>
         </CContainer>
       </CForm>

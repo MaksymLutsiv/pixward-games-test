@@ -1,9 +1,5 @@
 import styled, {css, keyframes} from 'styled-components';
 
-export const FormContainer = styled.div`
-  padding-top: 3rem;
-`;
-
 const commonAnimationStyles = css`
   animation-duration: 2s;
   animation-iteration-count: 1;
@@ -30,6 +26,9 @@ const rotatingAnimationBackward = keyframes`
   to { transform:rotate(0deg) }
 `;
 
+export const FormContainer = styled.div`
+  padding-top: 3rem;
+`;
 
 export const ImageContainerPlaceholder = styled.div`
   position: relative;
@@ -40,6 +39,8 @@ export const ImageContainerPlaceholder = styled.div`
 
 export const ImageContainer = styled.div`
   height: 550px;
+  position: absolute;
+  z-index: 0;
   ${({ shouldAnimateForward }: any) => shouldAnimateForward && css`animation-name: ${semiOrbitAnimationForward}`};
   ${({ shouldAnimateBackward }: any) => shouldAnimateBackward && css`animation-name: ${semiOrbitAnimationBackward}`};
   ${commonAnimationStyles}
